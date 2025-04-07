@@ -1,0 +1,15 @@
+package com.siga.camndaapp.Controller;
+
+/**
+ * @author MHAMDI Wassim 27/02/2025
+ * SIGA'S Product
+ */
+
+
+public class AdminController {
+    
+    @PostMapping("/testAdmin")
+    public ResponseEntity<String> seyHello() {
+        return ResponseEntity.ok("Hello from Admin Controller!");
+    }
+}

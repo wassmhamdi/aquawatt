@@ -1,0 +1,33 @@
+package com.siga.camndaapp.domain;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author MHAMDI Wassim 28/02/2025
+ * SIGA'S Product
+ */
+
+@Entity
+@Data
+@Builder
+@Table(name = "utilisateurs")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Role {
+
+    @NotNull
+    @Size(max = 50)
+    @Id
+    @Column(length = 50)
+    private String name;
+
+}

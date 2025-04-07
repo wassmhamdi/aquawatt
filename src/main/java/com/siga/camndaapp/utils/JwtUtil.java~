@@ -1,0 +1,92 @@
+package com.siga.camndaapp.utils;
+
+
+import com.siga.camndaapp.repository.RefreshTokenRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.security.Key;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Function;
+
+@Component
+/**
+ * @author MHAMDI Wassim 25/02/2025
+ * SIGA'S Product
+ */
+
+
+public class JwtUtil {@Value("${token.secret.key}")
+private String SECRET_KEY;
+
+    @Value("${jwt.refresh.expirationMs}")
+    private long EXPIRATION_TIME ; // 1 day
+
+
+
+    private final RefreshTokenRepository refreshTokenRepository;
+
+    public JwtUtil(RefreshTokenRepository refreshTokenRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
+
+    public String generateToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    public RefreshToken createRefreshToken(Utilisateur user) {
+        Optional<RefreshToken> existingToken = refreshTokenRepository.findByUtilisateur(user);
+        RefreshToken refreshToken;
+        if(existingToken.isPresent()){
+            refreshToken = existingToken.get();
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiryDate(Instant.now().plusMillis(EXPIRATION_TIME));
+        }else {
+            refreshToken = new RefreshToken();
+            refreshToken.setUtilisateur(user);
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiryDate(Instant.now().plusMillis(EXPIRATION_TIME));
+        }
+        return refreshTokenRepository.save(refreshToken);
+    }
+
+    public String extractUserName(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolvers.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+                .getBody();
+    }
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+}

@@ -1,0 +1,9 @@
+package com.siga.camndaapp.repository;
+
+/**
+ * @author MHAMDI Wassim 26/02/2025
+ * SIGA'S Product
+ */
+
+public interface RefreshTokenRepository {
+}

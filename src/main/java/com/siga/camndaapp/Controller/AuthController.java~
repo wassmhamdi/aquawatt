@@ -1,0 +1,16 @@
+package com.siga.camndaapp.Controller;
+
+import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+/**
+ * @author MHAMDI Wassim 26/02/2025
+ * SIGA'S Product
+ */
+
+@RestController()
+@RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "*")
+public class AuthController {
+}

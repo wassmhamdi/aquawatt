@@ -1,0 +1,28 @@
+package com.siga.camndaapp.dto;
+
+import com.siga.camndaapp.domain.DemandeConge;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+/**
+ * @author MHAMDI Wassim 24/02/2025
+ * SIGA'S Product
+ */
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DemandeCongeDto {
+    private Long id;
+    private String employeId;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    private String statut;
+    private UtilisateurDto demandeur;
+
+
+
+}

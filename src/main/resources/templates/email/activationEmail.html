@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Activation</title>
+</head>
+<body>
+<h2>Welcome, <span th:text="${name}"></span>!</h2>
+<p>Thank you for registering. Please click the link below to activate your account:</p>
+<a th:href="${activationLink}" href="#">Activate Your Account</a>
+<p>If you did not register, please ignore this email.</p>
+<p>Best regards,<br>Your Application Team</p>
+</body>
+</html>

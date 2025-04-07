@@ -1,0 +1,49 @@
+package com.siga.camndaapp.dto;
+
+/**
+ * @author MHAMDI Wassim 24/02/2025
+ * SIGA'S Product
+ */
+
+import com.siga.camndaapp.domain.Utilisateur;
+import com.siga.camndaapp.enums.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UtilisateurDto {
+
+    private Long id;
+    private Integer matricule;
+    private String nom;
+    private String prenom;
+    private String adresse;
+    private LocalDate dateNaissance;
+    private String email;
+    private Role role;
+    private Integer niveau;
+
+
+
+    public static UtilisateurDto toDto(Utilisateur utilisateur) {
+        return new UtilisateurDto(
+                utilisateur.getId(),
+                utilisateur.getMatricule(),
+                utilisateur.getNom(),
+                utilisateur.getPrenom(),
+                utilisateur.getAdresse(),
+                utilisateur.getDateNaissance(),
+                utilisateur.getEmail(),
+                utilisateur.getRole(),
+                utilisateur.getNiveau()
+        );
+    }
+
+}

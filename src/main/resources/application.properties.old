@@ -1,0 +1,29 @@
+spring.application.name=camndaApp
+
+# Configuration du serveur
+server.port=8080
+
+# Configuration de la base de données MySQL
+spring.datasource.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.url=jdbc:mysql://localhost:3306/camndaapp?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+# Configuration JPA / Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+
+spring.datasource.hikari.transaction-isolation=TRANSACTION_READ_COMMITTED
+
+
+
+# Activer Camunda Web Apps
+camunda.bpm.admin-user.id=admin
+camunda.bpm.admin-user.password=admin
+camunda.bpm.admin-user.email=wassimm7amdi@gmail.com
+camunda.bpm.admin-user.first-name=wassim
+camunda.bpm.admin-user.last-name=mhamdi
+camunda.bpm.database.schema-name=camndaapp
+camunda.bpm.database.table-prefix=camndaapp.
+camunda.bpm.database.schema-update=true
+camunda.bpm.webapp.application-path=/workflow

@@ -1,0 +1,37 @@
+<!--
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="fr">
+<head>
+    <title th:text="#{email.activation.title}">Email activation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+</head>
+<body>
+<p th:text="#{email.activation.greeting(${user.login})}">Dear</p>
+<p th:text="#{email.activation.text1}">Your account has been created, please click on the URL below to activate it:</p>
+<p>
+    <a th:with="url=(@{|${baseUrl}/account/activate?key=${user.activationKey}|})" th:href="${url}" th:text="${url}">Activation link</a>
+</p>
+<p>
+    <span th:text="#{email.activation.text2}">Regards, </span>
+    <br />
+    <em th:text="#{email.signature}">Teams.</em>
+</p>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Activation</title>
+</head>
+<body>
+<h2>Welcome, <span th:text="${name}"></span>!</h2>
+<p>Thank you for registering. Please click the link below to activate your account:</p>
+<a th:href="${activationLink}" href="#">Activate Your Account</a>
+<p>If you did not register, please ignore this email.</p>
+<p>Best regards,<br>Your Application Team</p>
+</body>
+</html>

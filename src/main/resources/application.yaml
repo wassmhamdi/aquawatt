@@ -1,0 +1,72 @@
+server:
+  port: 8081
+
+
+# MySQL database configuration
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/camunda4?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    dialect: org.hibernate.dialect.MySQL8Dialect
+
+  #smtp mail configuration:
+  mail:
+    test-connection: true
+    host: smtp.gmail.com
+    port: 587
+    username: sigatest18@gmail.com
+    password: rgnoxlzlyaygxqri
+    properties:
+      auth: true
+      mail:
+        debug: false
+        transport:
+          protocol: smtp
+        smtp:
+          starttls:
+            enable: true
+    default-encoding: utf-8
+    base-url: http://127.0.0.1:8081/
+    from: sigatest18@gmail.com
+
+test: hello
+jwt:
+  secret:
+    key: 86d0fc4af77e3a6f45c777f80f53fc56bc415ebedfa92c79050bdd7b1506e6c1a42bb33f1156cf79945a2e69661c66b358fe3b065c0a97c84352f387a6a75c8d1985262462f5e83704471248f5f0910c93fdfaf765abf49a035445872cc759a670f8dbc5ab2d4a6c9de752217a711ebbfe7ca5ce96d97e1c0f0c355016fba8d5a2a4030ca1d454fcc51801e3b2f1b07d219cfa06dc0d1cb6c60923d10d69bc5a400967d74e994681a999f2b79389408e450e19342c90014ff740d6262ebc84e8a0c354a12330ee6044f3e530ebb6f8d5f869469b22a5588d89dbd7c962f77723fd5534c48d61bd8474251d2e6aea77b8955a5d828d1b791a28e86baf04606dbb
+  refresh:
+    expirationMs: 86400000
+
+
+
+
+
+
+
+# Camunda BPM configuration
+camunda:
+  bpm:
+    admin-user:
+      id: siga
+      password: P@ssw0rd
+      email: foulen.benfoulen@siga.tn
+      first-name: Siga
+      last-name: SIGA
+  database:
+    schema-update: true
+    schema-name: camunda4
+    table-prefix: camunda4.
+  webapp:
+    index-redirect-enabled: true
+    application-path: /workflow
+  authorization:
+    enabled: false
+    enabled-for-custom-code: false

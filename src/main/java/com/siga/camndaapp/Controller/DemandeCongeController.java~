@@ -1,0 +1,71 @@
+package com.siga.camndaapp.Controller;
+
+
+import com.siga.camndaapp.service.DemandeCongeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+
+/**
+ * @author MHAMDI Wassim 25/02/2025
+ * SIGA'S Product
+ */
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/v1/congee")
+public class DemandeCongeController {
+
+    private final DemandeCongeService demandeCongeService;
+
+    public DemandeCongeController(DemandeCongeService demandeCongeService) {
+        this.demandeCongeService = demandeCongeService;
+    }
+
+    @PostMapping("/create")
+    ResponseEntity<ApiResponse<DemandeCongeDto>> createDemandeCongee(@RequestBody DemandeCongeDto demandeCongeDto){
+        DemandeCongeDto createdDemandeCongeDto =  demandeCongeService.createCongee(demandeCongeDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(createdDemandeCongeDto,true));
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<ApiResponse<DemandeCongeDto>> getCongeeById(@PathVariable("id") Long id){
+        DemandeCongeDto demandeCongeDto = demandeCongeService.getCongeeById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>(demandeCongeDto,true));
+    }
+
+    @GetMapping("/all")
+    ResponseEntity<ApiResponse<List<DemandeCongeDto>>> getAllCongee(){
+        List<DemandeCongeDto> allCongees = demandeCongeService.getAllCongee();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>(allCongees,true));
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<ApiResponse<DemandeCongeDto>> updateDemandeCongee(@PathVariable Long id,@RequestBody DemandeCongeDto demandeCongeDto){
+        DemandeCongeDto updatedCongee = demandeCongeService.updateCongee(id,demandeCongeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(updatedCongee,true));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteCongee(@PathVariable("id") Long id){
+        demandeCongeService.deleteCongee(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>(null,true));
+    }
+
+    @PostMapping("/manage_request_manager")
+    public ResponseEntity<ApiResponse<Void>> manageCongeeRequestByManager(@RequestBody ManageCongeeDTO manageCongeeDTO){
+
+        demandeCongeService.approveOrDisapproveTaskByManager(manageCongeeDTO.getTaskId(),manageCongeeDTO.isApproved());
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>(null,true));
+    }
+
+    @PostMapping("/manage_request_rh")
+    public ResponseEntity<ApiResponse<Void>> manageCongeeRequestByRH(@RequestBody ManageCongeeDTO manageCongeeDTO){
+
+        demandeCongeService.approveOrDisapproveTaskBYRH(manageCongeeDTO.getTaskId(),manageCongeeDTO.isApproved());
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse<>(null,true));
+    }
+
+}
